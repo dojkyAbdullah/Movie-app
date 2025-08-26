@@ -9,10 +9,10 @@ export const favouriteMovieSlice = createSlice({
        addToFavourites: (state, action) => {
         state.movies.push(action.payload)
        },
-         removeFromFavourites: (state, action) => {
-        state.movies = state.movies.filter(movie => movie.id !== action.payload.id)
-       
-         },
+       removeFromFavourites: (state, action) => {
+  state.movies = state.movies.filter(movie => movie.id !== action.payload);
+},
+
   
   }
 })

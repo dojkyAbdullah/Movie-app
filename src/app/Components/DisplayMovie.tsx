@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 
 import { addSearchTerm, clearHistory } from "@/features/searchHistory/searchHistorySlice";
 import { RootState } from "../store";
+import ShowFavourites from "./showFavourites";
 
 const api_key = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -33,6 +34,7 @@ const DisplayMovie = () => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
+  const [isFavOpen, setIsFavOpen] = useState(false)
 
 
   const favourites = useSelector((state: RootState) => state.favourites.movies);
@@ -48,6 +50,7 @@ const DisplayMovie = () => {
     [dispatch]
   );
 
+ 
   const handleRemoveFromFavorites = useCallback(
     (movie: Movie) => {
       dispatch(removeFromFavourites(movie.id));
@@ -159,6 +162,13 @@ const DisplayMovie = () => {
           onChange={(e) => handleSearch(e.target.value)}
           className="border p-2 rounded w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
+<button
+  onClick={() => setIsFavOpen(true)}
+  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow-md transition duration-200 ease-in-out hover:scale-105"
+>
+  Show Favourites
+</button>
+
 
         <select
           value={sortBy}
@@ -232,6 +242,7 @@ const DisplayMovie = () => {
       </button>
 
       {/* ✅ Pass props to modal */}
+
       {selectedMovieId && selectedMovie && (
         <SingleMovie
           id={selectedMovieId}
@@ -241,6 +252,8 @@ const DisplayMovie = () => {
           isFavourite={isFavourite}
         />
       )}
+      {isFavOpen && <ShowFavourites isOpen={isFavOpen} onClose={()=>setIsFavOpen(false)}/>}
+      
     </div>
   );
 };
