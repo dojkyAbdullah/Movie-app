@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/features/favourites/favouriteMovieSlice.js", "src/app/store.js", "src/features/searchHistory/searchHistorySlice.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/features/favourites/favouriteMovieSlice.js", "src/app/store.ts", "src/features/searchHistory/searchHistorySlice.js"],
   "exclude": ["node_modules"]
 }

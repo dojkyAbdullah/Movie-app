@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 
 import { addSearchTerm, clearHistory } from "@/features/searchHistory/searchHistorySlice";
+import { RootState } from "../store";
 
 const api_key = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -33,10 +34,10 @@ const DisplayMovie = () => {
   const topRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
 
-// @ts-ignore
-  const favourites = useSelector((state: any) => state.favourites.movies);
-  // @ts-ignore
-  const history = useSelector((state: any) => state.searchHistory.history);
+
+  const favourites = useSelector((state: RootState) => state.favourites.movies);
+
+  const history = useSelector((state: RootState) => state.searchHistory.history);
 
   // ✅ Callbacks
   const handleAddToFavorites = useCallback(
