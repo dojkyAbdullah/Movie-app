@@ -110,7 +110,7 @@ const DisplayMovie = () => {
 
   // ✅ Sort
   const sortedMovies = useMemo(() => {
-    let sorted = [...searchedMovies];
+    const sorted = [...searchedMovies];
     switch (sortBy) {
       case "title-asc":
         sorted.sort((a, b) => a.title.localeCompare(b.title));

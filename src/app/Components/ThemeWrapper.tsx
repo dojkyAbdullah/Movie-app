@@ -2,10 +2,11 @@
 import { toggleTheme } from "@/features/themeToggle/themeSlice";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
 
 
 const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
-  const mode = useSelector((state: any) => state.theme.mode);
+  const mode = useSelector((state: RootState) => state.theme.mode);
   const dispatch = useDispatch();
 
  
