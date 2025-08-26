@@ -152,35 +152,40 @@ const DisplayMovie = () => {
     <div ref={topRef}>
       <h2 className="text-2xl font-bold mb-4">Movies</h2>
 
-      {/* Search & Sort Controls */}
-      <div className="flex gap-4 mb-6">
-        <input
-          ref={searchBarRef}
-          type="text"
-          placeholder="Search movies..."
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="border p-2 rounded w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        />
-<button
-  onClick={() => setIsFavOpen(true)}
-  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow-md transition duration-200 ease-in-out hover:scale-105"
->
-  Show Favourites
-</button>
+   {/* Search & Sort Controls */}
+<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 w-full">
+  
+  {/* Search Input */}
+  <input
+    ref={searchBarRef}
+    type="text"
+    placeholder="Search movies..."
+    value={searchTerm}
+    onChange={(e) => handleSearch(e.target.value)}
+    className="border p-2 rounded w-full sm:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+  />
 
+  {/* Show Favourites Button */}
+  <button
+    onClick={() => setIsFavOpen(true)}
+    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow-md transition duration-200 ease-in-out hover:scale-105 w-full sm:w-auto"
+  >
+    Show Favourites
+  </button>
 
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-          className="border p-2 rounded text-black bg-white"
-        >
-          <option value="title-asc">Title (A–Z)</option>
-          <option value="title-desc">Title (Z–A)</option>
-          <option value="date-desc">Release Date (Newest)</option>
-          <option value="rating-desc">Rating (High → Low)</option>
-        </select>
-      </div>
+  {/* Sort Dropdown */}
+  <select
+    value={sortBy}
+    onChange={(e) => setSortBy(e.target.value)}
+    className="border p-2 rounded text-black bg-white w-full sm:w-auto"
+  >
+    <option value="title-asc">Title (A–Z)</option>
+    <option value="title-desc">Title (Z–A)</option>
+    <option value="date-desc">Release Date (Newest)</option>
+    <option value="rating-desc">Rating (High → Low)</option>
+  </select>
+</div>
+
 
       {/* ✅ Show Search History */}
       {history.length > 0 && (
@@ -189,7 +194,7 @@ const DisplayMovie = () => {
             <h4 className="font-semibold">Recent Searches:</h4>
             <button
               onClick={() => dispatch(clearHistory())}
-              className="text-sm text-red-500 hover:underline"
+              className="text-sm text-white rounded-md bg-red-700 px-4 py-2 hover:underline"
             >
               Clear
             </button>
@@ -209,7 +214,7 @@ const DisplayMovie = () => {
       )}
 
       {/* Movies Grid */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-4 grid-cols-2 gap-4">
         {sortedMovies.map((movie) => (
           <div
             key={movie.id}

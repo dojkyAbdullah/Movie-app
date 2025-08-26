@@ -21,7 +21,7 @@ const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
     const timer = setInterval(updateTheme, 60000); 
 
     return () => clearInterval(timer); 
-  });
+  }, []);
 
   return (
     <div
@@ -31,7 +31,7 @@ const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
     >
       <button
         onClick={() => dispatch(toggleTheme())}
-        className="p-2 border rounded"
+        className={`p-2 border rounded ${mode === 'dark' ? 'border-white text-black bg-white' : 'border-black text-white bg-black'}`}
       >
         Toggle Theme
       </button>
