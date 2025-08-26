@@ -33,7 +33,9 @@ const DisplayMovie = () => {
   const topRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
 
+// @ts-ignore
   const favourites = useSelector((state: any) => state.favourites.movies);
+  // @ts-ignore
   const history = useSelector((state: any) => state.searchHistory.history);
 
   // ✅ Callbacks
