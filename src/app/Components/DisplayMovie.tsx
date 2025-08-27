@@ -7,6 +7,8 @@ import dynamic from "next/dynamic";
 import { addSearchTerm, clearHistory } from "@/features/searchHistory/searchHistorySlice";
 import { RootState } from "../store";
 import ShowFavourites from "./showFavourites";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const api_key = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -30,7 +32,7 @@ const DisplayMovie = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("title-asc");
 
-  const searchBarRef = useRef<HTMLInputElement | null>(null);
+  const searchBarRef = useRef<HTMLInputElement>(null!);
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
@@ -39,7 +41,6 @@ const DisplayMovie = () => {
 
   const favourites = useSelector((state: RootState) => state.favourites.movies);
 
-  const history = useSelector((state: RootState) => state.searchHistory.history);
 
   // ✅ Callbacks
   const handleAddToFavorites = useCallback(
@@ -149,70 +150,20 @@ const DisplayMovie = () => {
     : false;
 
   return (
-    <div ref={topRef}>
-      <h2 className="text-2xl font-bold mb-4">Movies</h2>
+    <>
+    <Header
+      searchTerm={searchTerm}
+      onSearch={handleSearch}
+      sortBy={sortBy}
+      onSortChange={setSortBy}
+      onShowFavourites={() => setIsFavOpen(true)}
+      searchBarRef={searchBarRef}
+    />
+    <div ref={topRef} className="p-4">
 
-   {/* Search & Sort Controls */}
-<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 w-full">
-  
-  {/* Search Input */}
-  <input
-    ref={searchBarRef}
-    type="text"
-    placeholder="Search movies..."
-    value={searchTerm}
-    onChange={(e) => handleSearch(e.target.value)}
-    className="border p-2 rounded w-full sm:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-  />
+ 
 
-  {/* Show Favourites Button */}
-  <button
-    onClick={() => setIsFavOpen(true)}
-    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow-md transition duration-200 ease-in-out hover:scale-105 w-full sm:w-auto"
-  >
-    Show Favourites
-  </button>
-
-  {/* Sort Dropdown */}
-  <select
-    value={sortBy}
-    onChange={(e) => setSortBy(e.target.value)}
-    className="border p-2 rounded text-black bg-white w-full sm:w-auto"
-  >
-    <option value="title-asc">Title (A–Z)</option>
-    <option value="title-desc">Title (Z–A)</option>
-    <option value="date-desc">Release Date (Newest)</option>
-    <option value="rating-desc">Rating (High → Low)</option>
-  </select>
-</div>
-
-
-      {/* ✅ Show Search History */}
-      {history.length > 0 && (
-        <div className="mb-4">
-          <div className="flex justify-between items-center">
-            <h4 className="font-semibold">Recent Searches:</h4>
-            <button
-              onClick={() => dispatch(clearHistory())}
-              className="text-sm text-white rounded-md bg-red-700 px-4 py-2 hover:underline"
-            >
-              Clear
-            </button>
-          </div>
-          <ul className="flex gap-2 flex-wrap mt-2">
-            {history.map((term: string, idx: number) => (
-              <li
-                key={idx}
-                className="bg-gray-200 text-black px-2 py-1 rounded cursor-pointer hover:bg-gray-300"
-                onClick={() => setSearchTerm(term)}
-              >
-                {term}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
+          <h2 className="text-2xl font-bold mb-4">Movies</h2>
       {/* Movies Grid */}
       <div className="grid sm:grid-cols-4 grid-cols-2 gap-4">
         {sortedMovies.map((movie) => (
@@ -260,6 +211,8 @@ const DisplayMovie = () => {
       {isFavOpen && <ShowFavourites isOpen={isFavOpen} onClose={()=>setIsFavOpen(false)}/>}
       
     </div>
+    <Footer/>
+    </>
   );
 };
 
